@@ -2,7 +2,7 @@
 	
 	
 	
-	<style>
+	<!--style>
 	.post-it{
 	    width: 100px;
         height: 100px;
@@ -14,23 +14,29 @@
         float:left;
         width: 50%;
     }
-	</style>
+	</style-->
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"> </script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.js"> </script>
 	<script>
-	$(function() {
-		$( "#parados div" ).draggable({
+	$(function(){
+  	reload();
+	});
+	
+	function reload(){
+	  $( ".post-it" ).draggable({
 			appendTo: "body",
 			helper: "clone",
 		});
-		$( "#fazendo #spot" ).droppable({
+		
+		$( ".spot" ).droppable({
 			activeClass: "ui-state-default",
 			hoverClass: "ui-state-hover",
 			accept: ":not(.ui-sortable-helper)",
 			drop: function( event, ui ) {
 				$( this ).find( ".placeholder" ).remove();
-				$( "<div  class=\"post-it\"></div>" ).text( ui.draggable.text() ).appendTo( this );
+				$( "<div  class=\"post-it ui-draggable\"></div>" ).text( ui.draggable.text() ).appendTo( this );
+				reload();
 			}
 		}).sortable({
 			items: "div:not(.placeholder)",
@@ -40,7 +46,10 @@
 				$( this ).removeClass( "ui-state-default" );
 			}
 		});
-	});
+		
+
+	}
+	
 	</script>
 
 
@@ -49,22 +58,25 @@
 	
 	
 	<div id="parados" class="kanban">
-	<h1 class="ui-widget-header">Parados</h1>	
-		<div class="post-it">PostIT 1</div>
-		<div class="post-it">PostIT 2</div>
-		<div class="post-it">PostIT 3</div>	
-
+	  <h1 class="ui-widget-header">Parados</h1>	
+	  <div class="ui-widget-content">
+	    <div class="spot">
+		    <div class="post-it">PostIT 1</div>
+		    <div class="post-it">PostIT 2</div>
+		    <div class="post-it">PostIT 3</div>	
+		  </div>
+    </div>    
 	</div>
 
 
-<div id="fazendo" class="kanban">
-	<h1 class="ui-widget-header">Em Andamento</h1>
-	<div class="ui-widget-content">
-		<div id="spot">
-			<li class="placeholder">Add your items here</li>
-		</div>
-	</div>
-</div>
+  <div id="fazendo" class="kanban">
+	  <h1 class="ui-widget-header">Em Andamento</h1>
+	  <div class="ui-widget-content">
+		  <div class="spot">
+			  <li class="placeholder">Add your items here</li>
+		  </div>
+	  </div>
+  </div>
 
 
 
