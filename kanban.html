@@ -50,6 +50,12 @@
 
 	}
 	
+	function create_post_it(){
+	  var parados = $( "#parados .spot" );
+	  $( "<div id=\"post-it1\" class=\"post-it\" contenteditable=\"true\" >PostIt</div> ").appendTo( parados );
+	  reload();
+	}
+	
 	</script>
 
 
@@ -62,9 +68,9 @@
 	  <div class="ui-widget-content">
 	    <div class="spot">
 	      <li class="placeholder">Add your items here</li>  
-		    <div id="post-it1" class="post-it">PostIT 1</div>
-		    <div id="post-it2" class="post-it">PostIT 2</div>
-		    <div id="post-it3"class="post-it">PostIT 3</div>	
+		    <div id="post-it1" contenteditable="true" class="post-it">PostIT 1</div>
+		    <div id="post-it2" contenteditable="true" class="post-it">PostIT 2</div>
+		    <div id="post-it3"contenteditable="true" class="post-it">PostIT 3</div>	
 		  </div>
     </div>    
 	</div>
@@ -86,6 +92,8 @@
 		  </div>
 	  </div>
   </div>
+  
+  <input type="button" value="Add" onclick="create_post_it();">
 
 
 
