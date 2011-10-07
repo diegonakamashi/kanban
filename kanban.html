@@ -20,13 +20,30 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.js"> </script>
 	<script>
 	$(function(){
-  	reload();
+		count = 0;
+  		reload();
 	});
 	
 	function reload(){
-	  $( ".post-it" ).draggable({
+	  	$( ".post-it" ).draggable({
 			appendTo: "body",
 			helper: "clone",
+			start: function(){
+				$(document).mousemove(function(e){
+      				$('#position').text(e.pageX +', '+ e.pageY);
+   				}); 
+			},
+			drag: function(){				
+				$(document).mousemove(function(e){
+      				$('#position').text(e.pageX +', '+ e.pageY);
+   				}); 
+				
+			},
+			stop: function(){
+				$(document).mousemove(function(e){
+      				$('#position').text(e.pageX +', '+ e.pageY);
+   				}); 
+			},
 		});
 		
 		$( ".spot" ).droppable({
@@ -56,13 +73,16 @@
 	  reload();
 	}
 	
-	</script>
-
-
-
-
+	function create_kanban(kanban){
+	  var parados = kanban.parados;
+	  var executando = kanban.executando;
+	  var finalizados = kanban.finalzados;
+	}
+	
+	</script>	
 	
 	
+
 	<div id="parados" class="kanban">
 	  <h3 class="ui-widget-header">Parados</h3>	
 	  <div class="ui-widget-content">
@@ -95,5 +115,4 @@
   
   <input type="button" value="Add" onclick="create_post_it();">
 
-
-
+  <label id="position">Top</label>
