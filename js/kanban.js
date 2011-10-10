@@ -15,6 +15,8 @@ Kanban.prototype.status = function(){
 	return status;
 }
 
+//Recebe uma function como parãmetro que será chamada
+//toda vez que um post-it for movido
 Kanban.prototype.init = function(onDragging){
 	$( ".post-it" ).draggable({
 			appendTo: "body",
