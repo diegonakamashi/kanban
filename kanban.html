@@ -23,12 +23,7 @@
 	$(function(){
 		count = 0;
   		var kanban = new Kanban();
-  		kanban.init(function() {
-  			$(document).mousemove(function(e){
-      				$('#position').text(e.pageX +', '+ e.pageY);
-      				$('#status').text(kanban.status());
-   			}); 
-  		});
+  		kanban.init();  		  		
 	});
 	
 	
@@ -72,3 +67,5 @@
   <label id="position">Top</label>
   <br>
   <label id="status">Status</label>
+    <br>
+  <label id="postit">Postit</label>

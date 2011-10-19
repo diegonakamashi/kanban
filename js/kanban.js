@@ -3,42 +3,49 @@ function Kanban(){
     	return new arguments.callee(arguments);
   	}
 
-  	STATUS_STOP = 0;
-  	STATUS_START = 1;
-  	STATUS_DRAG = 2;
+  	var self = this; 	
 
-  	var self = this;
-  	var status = STATUS_STOP;//Private Variuable
+  	var postItList = [];//Lista de postit
+  	var movingPostit; //Postit que esta sendo movido
+  	var postit;//id do postit sendo movido no momento
 }
 
 Kanban.prototype.status = function(){
 	return status;
 }
 
-//Recebe uma function como parãmetro que será chamada
-//toda vez que um post-it for movido
-Kanban.prototype.init = function(onDragging){
+Kanban.prototype.updateValues = function(x, y, id){
+	$('#position').text('O positit [' + this.postit + '] esta nessa posição' +x + ', ' + y);
+}
+
+Kanban.prototype.getMovingPostit = function(){	
+	var self = this;
+	return self.movingPostit;
+}
+
+Kanban.prototype.init = function(){
+	var self = this;	
+
+	//Function utilizada quando se esta movendo o postit
+	function mousemove_func(e){
+		self.updateValues(e.pageX, e.pageY);
+	}
+
 	$( ".post-it" ).draggable({
 			appendTo: "body",
 			helper: "clone",
 			start: function(){
-				status = STATUS_START;
-				if(onDragging)
-					onDragging();
-				// $(document).mousemove(function(e){
-    //   				$('#position').text(e.pageX +', '+ e.pageY);
-    //   				$('#status').text('start');
-   	// 			}); 
+				self.postit = this.id;
+				$(document).mousemove(mousemove_func); 				
+			
 			},
 			drag: function(){	
-				if(onDragging)
-					onDragging();	
-				status = STATUS_DRAG;						
+				self.postit = this.id;
+				$(document).mousemove(mousemove_func);   				
 			},
 			stop: function(){
-				if(onDragging)
-					onDragging();
-				status = STATUS_STOP;
+				self.postit = this.id;
+				$(document).unbind('mousemove', mousemove_func);
 			},
 		});
 		
