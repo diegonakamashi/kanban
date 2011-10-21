@@ -16,6 +16,8 @@ Kanban.prototype.status = function(){
 
 Kanban.prototype.updateValues = function(x, y, id){
 	$('#position').text('O positit [' + this.postit + '] esta nessa posição' +x + ', ' + y);
+
+	this.movePostId('#post-it3', x, y);
 }
 
 Kanban.prototype.getMovingPostit = function(){	
@@ -54,15 +56,22 @@ Kanban.prototype.init = function(){
 			hoverClass: "ui-state-hover",
 			accept: ":not(.ui-sortable-helper)",
 			drop: function( event, ui ) {
-//				$( this ).find( ".placeholder" ).remove();
-				$( ui.draggable ).appendTo( this );				
-			}
+				$( ui.draggable ).appendTo( this );		
+				alert("O postit " + ui.draggable[0].id + " foi movido para a área " + this.id );
+			} 
 		}).sortable({
 			items: "div:not(.placeholder)",
 			sort: function() {
-				// gets added unintentionally by droppable interacting with sortable
-				// using connectWithSortable fixes this, but doesn't allow you to customize active/hoverClass options
 				$( this ).removeClass( "ui-state-default" );
 			}
 		});
 }
+
+Kanban.prototype.movePostId = function(id, left, top) {	
+	var coord = {
+		left: left,
+		top: top
+	};
+
+	$(id).offset(coord);
+};

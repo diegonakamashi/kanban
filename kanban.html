@@ -2,28 +2,43 @@
 	
 	
 	
-	<!--style>
+	<style>
 	.post-it{
 	    width: 100px;
         height: 100px;
-        background: green;
         border: solid}
 
     .kanban{
         position:relative;
         float:left;
-        width: 50%;
+        width: 33%;
+        height: 33%;
     }
-	</style-->
+
+    .spot{
+    	height: 400px;
+    }
+	</style>
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"> </script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.js"> </script>
 	<script type="text/javascript" src="js/kanban.js"> </script>
 	<script>
-	$(function(){
+	$(function(){	
+
 		count = 0;
   		var kanban = new Kanban();
-  		kanban.init();  		  		
+  		kanban.init();  
+  		
+  		var movedFunction = function(){
+			var id = '#' + $('#postitid').val();
+			var left = $('#postitleft').val();
+			var top = $('#postittop').val();
+
+			kanban.movePostId(id, left, top);
+		}
+		$('#move_button').click(movedFunction);
+		  		
 	});
 	
 	
@@ -34,7 +49,7 @@
 	<div id="parados" class="kanban">
 	  <h3 class="ui-widget-header">Parados</h3>	
 	  <div class="ui-widget-content">
-	    <div class="spot">
+	    <div class="spot" id="parados_spot">
 	      <li class="placeholder">Add your items here</li>  
 		    <div id="post-it1" contenteditable="true" class="post-it">PostIT 1</div>
 		    <div id="post-it2" contenteditable="true" class="post-it">PostIT 2</div>
@@ -46,7 +61,7 @@
   <div id="fazendo" class="kanban">
 	  <h3 class="ui-widget-header">Em Andamento</h3>
 	  <div class="ui-widget-content">
-		  <div class="spot">
+		  <div class="spot" id="andamento_spot">
 			  <li class="placeholder">Add your items here</li>
 		  </div>
 	  </div>
@@ -55,7 +70,7 @@
   <div id="terminado" class="kanban">
 	  <h4 class="ui-widget-header">Pronto</h4>
 	  <div class="ui-widget-content">
-		  <div class="spot">
+		  <div class="spot" id="pronto_spot">
 			  <li class="placeholder">Add your items here</li>
 		  </div>
 	  </div>
@@ -69,3 +84,12 @@
   <label id="status">Status</label>
     <br>
   <label id="postit">Postit</label>
+  <br>
+  
+  <fieldset>
+  	<label>PostIt ID: </label><input id='postitid' type='text' size='20'></input><br/>
+  	<label>Left: </label><input id='postitleft' type='text' size='20'></input><br/>
+  	<label>Top: </label><input id='postittop' type='text' size='20'></input><br/>
+
+  	<input id='move_button' type='button' value='Move'/>
+  </fieldset>
