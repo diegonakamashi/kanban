@@ -75,3 +75,8 @@ Kanban.prototype.movePostId = function(id, left, top) {
 
 	$(id).offset(coord);
 };
+
+Kanban.prototype.dropPostIt = function(id, local) 
+{
+	
+};
