@@ -22,6 +22,9 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"> </script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.js"> </script>
 	<script type="text/javascript" src="js/kanban.js"> </script>
+	<script type="text/javascript" 
+        src="http://localhost:8888/faye.js">
+        </script>
 	<script>
 	$(function(){	
 
@@ -37,6 +40,15 @@
 			kanban.movePostId(id, left, top);
 		}
 		$('#move_button').click(movedFunction);
+
+
+		 var client = new Faye.Client('http://localhost:8888/faye', {
+        timeout: 120
+    });
+		var subscription = client.subscribe('/teste', function(message) {
+		kanban.movePostId('#post-it2', message.x, message.y);
+
+});
 		  		
 	});
 	

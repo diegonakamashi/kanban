@@ -2,6 +2,9 @@ var http = require("http");
 var url = require("url");
 var faye = require('Faye 0.6.6/faye-node');
 
+var positionx = 0;
+var positiony = 0;
+
 function start(route, handle) {
   function onRequest(request, response) {
     var postData = "";
@@ -26,17 +29,29 @@ function start(route, handle) {
     timeout: 45
   });
 
-  var client = new faye.Client('http://localhost:8888/faye');
-
-  client.publish('/email/new', {
-  text:       'New email has arrived!',
-  inboxSize:  34
-});
+  
 
   server = http.createServer(onRequest);
   bayeux.attach(server);
   server.listen(8888);
   console.log("Server has started.");
+
+  setTimeout(sendMsg, 1000);
+  
+}
+
+function sendMsg(){
+  var client = new faye.Client('http://localhost:8888/faye');
+
+  client.publish('/teste', {
+    x: positionx,
+    y: positiony
+  });
+
+  positiony = positiony + 1;
+  positionx = positionx + 1;
+
+  setTimeout(sendMsg, 10);
 }
 
 exports.start = start;
