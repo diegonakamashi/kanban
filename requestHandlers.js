@@ -46,8 +46,6 @@ function kanban(response, postData){
 }
 
 
-
-
 exports.start = start;
 exports.upload = upload;
 exports.kanban = kanban;

@@ -36,7 +36,10 @@ function start(route, handle) {
   server.listen(8888);
   console.log("Server has started.");
 
-  setTimeout(sendMsg, 1000);
+  var client = new faye.Client('http://localhost:8888/faye');
+  var subscription = client.subscribe('/teste', function(message) {
+    console.log("Receive " + message);
+  });
   
 }
 
@@ -44,6 +47,7 @@ function sendMsg(){
   var client = new faye.Client('http://localhost:8888/faye');
 
   client.publish('/teste', {
+    postit_id: '';
     x: positionx,
     y: positiony
   });
