@@ -39,11 +39,7 @@ function start(route, handle) {
   var client = bayeux.getClient();
   client.subscribe('/teste', function(message) {
     console.log("Server -- Receive message ");
-    client.publish('/teste_update', {
-        x: message.x,
-        y: message.y,
-        postit: message.postit
-    });
+    client.publish('/teste_update', message);
   }).callback(function() {
   console.log('Subscription is now active!');
 }); 
