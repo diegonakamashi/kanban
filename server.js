@@ -28,34 +28,27 @@ function start(route, handle) {
     mount: '/faye',
     timeout: 45
   });
-
   
 
   server = http.createServer(onRequest);
   bayeux.attach(server);
+  
   server.listen(8888);
   console.log("Server has started.");
 
-  var client = new faye.Client('http://localhost:8888/faye');
-  var subscription = client.subscribe('/teste', function(message) {
-    console.log("Receive " + message);
-  });
+  var client = bayeux.getClient();
+  client.subscribe('/teste', function(message) {
+    console.log("Server -- Receive message ");
+    client.publish('/teste_update', {
+        x: message.x,
+        y: message.y,
+        postit: message.postit
+    });
+  }).callback(function() {
+  console.log('Subscription is now active!');
+}); 
   
 }
 
-function sendMsg(){
-  var client = new faye.Client('http://localhost:8888/faye');
-
-  client.publish('/teste', {
-    postit_id: '';
-    x: positionx,
-    y: positiony
-  });
-
-  positiony = positiony + 1;
-  positionx = positionx + 1;
-
-  setTimeout(sendMsg, 10);
-}
 
 exports.start = start;

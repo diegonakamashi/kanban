@@ -7,47 +7,66 @@ function Kanban(){
 
   	var postItList = [];//Lista de postit
   	var movingPostit; //Postit que esta sendo movido
-  	var postit;//id do postit sendo movido no momento
+  	var postit = ""; //id do postit sendo movido no momento  	
+  	 var fayeClient;
 }
 
 Kanban.prototype.status = function(){
 	return status;
 }
 
-Kanban.prototype.updateValues = function(x, y, id){
-	$('#position').text('O positit [' + this.postit + '] esta nessa posição' +x + ', ' + y);
-
-	this.movePostId('#post-it3', x, y);
+Kanban.prototype.updateValues = function(id, x, y){
+	$('#position').text('O positit [' + id + '] esta nessa posição' +x + ', ' + y);
 }
 
-Kanban.prototype.getMovingPostit = function(){	
+Kanban.prototype.sendPostitPosition = function() 
+{
 	var self = this;
-	return self.movingPostit;
-}
+	var x = 0;
+	var y = 0;
+	if(self.movingPostit){
+
+ 		$(document).mousemove(function(e){
+   	
+
+			console.log("Send information");
+			var p_it = $("#"+self.movingPostit);
+			var position = p_it.offset();
+			self.fayeClient.publish('/teste', {
+  				x: e.pageX,
+  				y: e.pageY,
+  				postit: self.movingPostit
+			});
+		});
+	}
+};
 
 Kanban.prototype.init = function(){
 	var self = this;	
-
-	//Function utilizada quando se esta movendo o postit
-	function mousemove_func(e){
-		self.updateValues(e.pageX, e.pageY);
-	}
+	self.fayeClient = new Faye.Client('http://localhost:8888/faye', {
+        	timeout: 120
+    	});
+		
+	self.fayeClient.subscribe('/teste_update', function(message) {
+			console.log("Receive message");
+			if(self.movingPostit != message.postit)
+			{
+				self.movePostId('#' + message.postit, message.x, message.y);
+				self.updateValues('#' + message.postit, message.x, message.y);
+			}
+		}); 	
 
 	$( ".post-it" ).draggable({
 			appendTo: "body",
 			helper: "clone",
 			start: function(){
-				self.postit = this.id;
-				$(document).mousemove(mousemove_func); 				
-			
+				self.movingPostit = this.id;			
 			},
 			drag: function(){	
-				self.postit = this.id;
-				$(document).mousemove(mousemove_func);   				
+				self.movingPostit = this.id;				
 			},
 			stop: function(){
-				self.postit = this.id;
-				$(document).unbind('mousemove', mousemove_func);
+				self.movingPostit = null			
 			},
 		});
 		
@@ -57,7 +76,9 @@ Kanban.prototype.init = function(){
 			accept: ":not(.ui-sortable-helper)",
 			drop: function( event, ui ) {
 				$( ui.draggable ).appendTo( this );		
-				alert("O postit " + ui.draggable[0].id + " foi movido para a área " + this.id );
+				self.movingPostit = null;
+				// alert("O postit " + ui.draggable[0].id + " foi movido para a área " + this.id );
+
 			} 
 		}).sortable({
 			items: "div:not(.placeholder)",
@@ -65,6 +86,8 @@ Kanban.prototype.init = function(){
 				$( this ).removeClass( "ui-state-default" );
 			}
 		});
+
+		setInterval(self.sendPostitPosition.bind(self), 500);
 }
 
 Kanban.prototype.movePostId = function(id, left, top) {	
