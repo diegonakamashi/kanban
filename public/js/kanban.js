@@ -4,10 +4,15 @@ function Kanban(){
   	}
   	var self = this; 	
   	var postItList = [];//Lista de postit
+  	var spotList = [];//Lista de Spots
   	var movingPostit; //Postit que esta sendo movido
   	var postit = ""; //id do postit sendo movido no momento  	
   	var fayeClient;
 }
+
+Kanban.prototype.addSpots = function(spots) {
+	
+};
 
 Kanban.prototype.sendPostitPosition = function() {
 	var self = this;
@@ -96,4 +101,9 @@ Kanban.prototype.dropPostIt = function(id, local)
 	var p_id = $(id);
 	p_id.removeAttr("style");
 	p_id.appendTo(spot);
+};
+
+Kanban.prototype.addPostIt = function(id) {
+	var self = this;
+	self.postItList.push
 };

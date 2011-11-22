@@ -1,4 +1,4 @@
-function PostIt(x, y, id)
+function PostIt(id)
 {
 	if (! (this instanceof arguments.callee)) {
     	return new arguments.callee(arguments);
@@ -6,10 +6,8 @@ function PostIt(x, y, id)
 
   	var self = this;
 
-  	var positionX = x;
-  	var positionY = y;
   	var postitID = id;
-  	var kanban;
+  	var spot;
   	var priority;
 }
 
