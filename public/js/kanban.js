@@ -1,6 +1,7 @@
-var FAYEPATH_SEND='/teste'
-var FAYEPATH_UPDATE='/teste_update'
-var FAYE_CLIENT='http://192.168.191.196:8888/faye';
+var FAYEPATH_SEND='/faye_channel'
+var FAYEPATH_UPDATE='/faye_channel_update'
+var FAYE_ADDRESS = '192.168.191.196:8888';
+var FAYE_CLIENT='http://'+FAYE_ADDRESS+'/faye'
 var SEND_POSTIT_POSITION_INTERVAL = 500;
 
 
@@ -42,6 +43,9 @@ function Kanban(){
         
         var localElem = $('#'+local);
         localElem.html(html);    
+        $.getScript('http://'+FAYE_ADDRESS+'/faye.js', function(){         	
+        	self.init();
+    	});
     };
 
     //Returns a Spot Object
@@ -77,9 +81,8 @@ function Kanban(){
 
     //Initialize the kanban.
     self.init = function(){
-	    var self = this;	
-        fayeClient = new Faye.Client(FAYE_CLIENT, {	timeout: 120 });
-			
+	    var self = this;	       
+	    fayeClient = new Faye.Client(FAYE_CLIENT, {	timeout: 120 });
         fayeClient.subscribe(FAYEPATH_UPDATE, function(message) {
 			    console.log("Receive message");
 			    if(message.type == 'moving'){

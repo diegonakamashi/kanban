@@ -2,8 +2,8 @@ var http = require("http");
 var url = require("url");
 var faye = require('Faye 0.6.6/faye-node');
 
-var positionx = 0;
-var positiony = 0;
+var FAYE_PATH = '/faye_channel';
+var FAYE_PATH_UPDATE = '/faye_channel_update';
 
 function start(route, handle) {
   function onRequest(request, response) {
@@ -37,9 +37,9 @@ function start(route, handle) {
   console.log("Server has started.");
 
   var client = bayeux.getClient();
-  client.subscribe('/teste', function(message) {
+  client.subscribe(FAYE_PATH, function(message) {
     console.log("Server -- Receive message ");
-    client.publish('/teste_update', message);
+    client.publish(FAYE_PATH_UPDATE, message);
   }).callback(function() {
   console.log('Subscription is now active!');
 }); 

@@ -29,12 +29,11 @@
 	<script type="text/javascript" src="js/AddFunctions.js"> </script>
 	<script type="text/javascript" src="js/kanban.js"> </script>
 	<script type="text/javascript" src="js/spot.js"> </script>
-	<script type="text/javascript" src="js/postit.js"> </script>
-	<script type="text/javascript" src="http://192.168.191.196:8888/faye.js"></script>
+	<script type="text/javascript" src="js/postit.js"> </script>	
 	<script>
 	$(function(){	
 
-		count = 0;
+		  count = 0;
   		var kanban = new Kanban();
   		  		
   		var parados = new Spot("Parados");
@@ -51,9 +50,7 @@
   		kanban.addSpot(executando);
   		kanban.addSpot(finalizados);
   		
-  		kanban.build("local");
-  		
-  		kanban.init();
+  		kanban.build("local");  		
   		
   		var createFunction = function(){
 				
