@@ -26,13 +26,33 @@
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"> </script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.js"> </script>
+	<script type="text/javascript" src="js/AddFunctions.js"> </script>
 	<script type="text/javascript" src="js/kanban.js"> </script>
-	<script type="text/javascript" src="http://192.168.191.125:8888/faye.js"></script>
+	<script type="text/javascript" src="js/spot.js"> </script>
+	<script type="text/javascript" src="js/postit.js"> </script>
+	<script type="text/javascript" src="http://192.168.191.196:8888/faye.js"></script>
 	<script>
 	$(function(){	
 
 		count = 0;
   		var kanban = new Kanban();
+  		  		
+  		var parados = new Spot("Parados");
+  		var executando = new Spot("Executando");
+  		var finalizados = new Spot("Finalizados");
+  		
+  		var postIt1 = new PostIt('one', "Text1");
+  		var postIt2 = new PostIt('two', "Text2");
+  		
+  		parados.addPostIt(postIt1);
+  		parados.addPostIt(postIt2);
+  		
+  		kanban.addSpot(parados);
+  		kanban.addSpot(executando);
+  		kanban.addSpot(finalizados);
+  		
+  		kanban.build("local");
+  		
   		kanban.init();
   		
   		var createFunction = function(){
@@ -43,48 +63,7 @@
 	
 	</script>	
 	
+	<div id = "local">
 	
-
-	<div id="parados" class="kanban">
-	  <h3 class="ui-widget-header">Parados</h3>	
-	  <div class="ui-widget-content">
-	    <div class="spot" id="parados_spot">
-	      	<li class="placeholder">Add your items here</li>  
-		    <div id="post-it1" contenteditable="true" class="post-it">PostIT 1</div>
-		    <div id="post-it2" contenteditable="true" class="post-it">PostIT 2</div>
-		    <div id="post-it3"contenteditable="true" class="post-it">PostIT 3</div>	
-		</div>
-    </div>    
 	</div>
 
-  <div id="fazendo" class="kanban">
-	  <h3 class="ui-widget-header">Em Andamento</h3>
-	  <div class="ui-widget-content">
-		  <div class="spot" id="andamento_spot">
-			  <li class="placeholder">Add your items here</li>
-		  </div>
-	  </div>
-  </div>
-  
-  <div id="terminado" class="kanban">
-	  <h4 class="ui-widget-header">Pronto</h4>
-	  <div class="ui-widget-content">
-		  <div class="spot" id="pronto_spot">
-			  <li class="placeholder">Add your items here</li>
-		  </div>
-	  </div>
-  </div>
-  
-  
-
-  <br>
-  <label id="position">Top</label>
-  <br>
-  <label id="status">Status</label>
-    <br>
-  <label id="postit">Postit</label>
-  <br>
-  
-  <fieldset>
-  	<input id='create_button' type='button' value='Create'/>
-  </fieldset>

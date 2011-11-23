@@ -1,4 +1,5 @@
-function PostIt(id)
+var POSTIT_CLASS='post-it';
+function PostIt(id, txt)
 {
 	if (! (this instanceof arguments.callee)) {
     	return new arguments.callee(arguments);
@@ -6,22 +7,29 @@ function PostIt(id)
 
   	var self = this;
 
-  	var postitID = id;
-  	var spot;
+  	var _id = id;
+  	var _txt = txt;
+  	var _spot ;
   	var priority;
-}
-
-PostIt.prototype.x = function() 
-{
-	return positionX;
-}
-
-PostIt.prototype.y = function() 
-{
-	return positionY;
-}
-
-PostIt.prototype.id = function() 
-{
-	return postitID;
+  	
+  	self.getId = function(){
+  	    var self = this;
+  	    return _id;
+  	}
+  	
+  	self.getSpot = function() {
+  	    var self = this;
+	    return _spot;
+    };
+    
+    self.setSpot = function(spot) {        
+        var self = this;
+        _spot = spot;
+    };
+    
+    self.getHtml = function() {
+        var self = this;
+        var html = '<div id="'+_id+'" contenteditable="true" class="'+POSTIT_CLASS+'">'+_txt+'</div>';
+	    return html;
+    };
 }

@@ -1,6 +1,6 @@
 //JS criado somente para adicionar funções aos objetos ja existentes no JavaScript
 
-Array.prototype.each = function(fun)
+Array.prototype.each = function(fun/*, thisp*/)//thisp => Caso seja necessário passar um this para a função
 {
 	var len = this.length;
     if (typeof fun != "function")
@@ -12,3 +12,5 @@ Array.prototype.each = function(fun)
       fun.call(thisp, this[i], i, this);
     }
 };
+
+
