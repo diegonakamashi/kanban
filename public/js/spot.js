@@ -1,4 +1,3 @@
-var KANBAN_CLASS = 'kanban';
 var SPOT_CLASS = 'spot';
 function Spot(label)
 {
@@ -57,7 +56,7 @@ function Spot(label)
         var self = this;
         var index = -1;
         for(var i = 0; i < _postIts.length; i++){
-            if(postId.getId() == _postIts[i].getId())
+            if(postIt.getId() == _postIts[i].getId())
             {
                 index = i;
                 break;

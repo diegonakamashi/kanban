@@ -155,7 +155,7 @@ function Kanban(){
 	    postItElem.removeAttr("style");
 	    postItElem.appendTo(newSpotHtml);	
 
-	    newSpotObj.addPostIt(postIdObj);
+	    newSpotObj.addPostIt(postItObj);
 	    oldSpotObj.removePostIt(postItObj);
     };
 

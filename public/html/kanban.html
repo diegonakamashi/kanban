@@ -7,21 +7,16 @@
 	}
 
 	.post-it{
-	    width: 100px;
-        height: 100px;
-        border: solid
-    }
-
-    .kanban{
-        position:relative;
-        float:left;
-        width: 33%;
-        height: 33%;
-    }
-
-    .spot{
-    	height: 400px;
-    }
+    width: 100px;
+    height: 100px;
+    border: solid
+  }
+  .spot{
+    height: 400px;
+    position:relative;
+    float:left;
+    width: 33%;
+  }
 	</style>
 	
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"> </script>
@@ -56,7 +51,10 @@
         var pItId = $('#pItId').val();
         var pItText = $('#pItText').val();
         var pItSpot = $('#pItSpot').val();
-
+        createPostIt(pItId, pItText, pItSpot);        
+      });
+      
+      var createPostIt = function(pItId, pItText, pItSpot){
         var spot = kanban.getSpot(pItSpot);
         if(spot == null)
         {
@@ -73,10 +71,10 @@
 
         var pit = new PostIt(pItId, pItText);
         spot.addPostIt(pit);
-        $('#'+pItSpot+'_spot').append(pit.getHtml());       
+        $('#'+pItSpot).append(pit.getHtml());       
         kanban.init();
-      });
-      
+      }
+
       $('#rel_button').click(function(){
         alert(kanban.getText());
       });  
