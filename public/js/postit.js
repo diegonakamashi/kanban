@@ -32,4 +32,9 @@ function PostIt(id, txt)
         var html = '<div id="'+_id+'" contenteditable="true" class="'+POSTIT_CLASS+'">'+_txt+'</div>';
 	    return html;
     };
+
+    self.getText = function(){
+      var text = 'Post-it ' + _id + '\n';
+      return text;
+    }
 }

@@ -69,4 +69,15 @@ function Spot(label)
         if(index >= 0)
             _postIts.splice(index, 1);
     };
+
+    self.getText = function(){
+        var text = 'Spot: ' + _label + '\n';
+        text += 'Lista de Post Its:\n';
+        text = text + 'Tamanho: ' + _postIts.length + '\n';
+        _postIts.each(function(postIt){
+            text = text + postIt.getText() + '\n';
+        });
+
+        return text;
+    }
 }

@@ -50,15 +50,53 @@
   		kanban.addSpot(executando);
   		kanban.addSpot(finalizados);
   		
-  		kanban.build("local");  		
-  		
-  		var createFunction = function(){
-				
-		}
+  		kanban.build("local"); 
+      
+      $('#addPostIt').click(function(){
+        var pItId = $('#pItId').val();
+        var pItText = $('#pItText').val();
+        var pItSpot = $('#pItSpot').val();
+
+        var spot = kanban.getSpot(pItSpot);
+        if(spot == null)
+        {
+          alert('The spot '+pItSpot+' does\'nt exist.')
+          return;
+        }
+
+        var postIt = kanban.getPostIt(pItId);
+        if(postIt != null)
+        {
+          alert("Esse postIt ja existe.");
+          return;
+        }
+
+        var pit = new PostIt(pItId, pItText);
+        spot.addPostIt(pit);
+        $('#'+pItSpot+'_spot').append(pit.getHtml());       
+        kanban.init();
+      });
+      
+      $('#rel_button').click(function(){
+        alert(kanban.getText());
+      });  
 	});
 	
 	
 	</script>	
+
+  <fieldset>
+    <legend>Add Post It</legend>
+    <p><label>PostIt id:</label><input id='pItId' type='text' value='' size=30></p>
+    <p><label>PostIt Text:</label><input id='pItText' type='text' value='' size=30></p>
+    <p><label>PostIt Spot:</label><input id='pItSpot' type='text' value='' size=30></p>
+    <p><input id='addPostIt' type='button' value='Add Post-It'></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Teste</legend>
+    <p><input id='rel_button' type='button' value='Relatorio'></p>
+  </fieldset>
 	
 	<div id = "local">
 	

@@ -51,12 +51,13 @@ function Kanban(){
     //Returns a Spot Object
     self.getSpot = function(spotName){
         var self = this;
+        var kanbanSpot = null;
         spotList.each(function(spot){
-            if(spot.getLabel == spotName)
-                return spot;
+            if(spot.getLabel() == spotName)
+                kanbanSpot = spot;
         });
         
-        return null;
+        return kanbanSpot;
     }
 
     //Send the postitPosition to the Node Server
@@ -81,17 +82,20 @@ function Kanban(){
 
     //Initialize the kanban.
     self.init = function(){
-	    var self = this;	       
-	    fayeClient = new Faye.Client(FAYE_CLIENT, {	timeout: 120 });
-        fayeClient.subscribe(FAYEPATH_UPDATE, function(message) {
-			    console.log("Receive message");
-			    if(message.type == 'moving'){
-				    if(movingPostit != message.postit)
-					    self.movePostId(message.postit, message.x, message.y);
-			    }else if(message.type == 'drop'){				
-			        self.onDropPostIt(message.p_id, message.newSpot);			
-			    }
-		    }); 	
+	    var self = this;	
+	    if(fayeClient == null)       
+	    {
+		    fayeClient = new Faye.Client(FAYE_CLIENT, {	timeout: 120 });
+	        fayeClient.subscribe(FAYEPATH_UPDATE, function(message) {
+				    console.log("Receive message");
+				    if(message.type == 'moving'){
+					    if(movingPostit != message.postit)
+						    self.movePostId(message.postit, message.x, message.y);
+				    }else if(message.type == 'drop'){				
+				        self.onDropPostIt(message.p_id, message.newSpot);			
+				    }
+			    }); 	
+		}
 
 	    $( ".post-it" ).draggable({
 			    appendTo: "body",
@@ -159,6 +163,16 @@ function Kanban(){
 	    var self = this;
 	    self.postItList.push
     };
+
+    self.getText = function(){
+    	var text = 'Kanban\n';
+    	spotList.each(function(spot){
+    		text += '--------------\n';
+    		text += spot.getText();
+    		text += '\n';
+    	});    	
+    	return text;
+    }
       
 }
 
