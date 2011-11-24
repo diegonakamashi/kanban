@@ -17,13 +17,11 @@ function Spot(label)
     
     self.getHtml = function(){
         var self = this;
-        var html = ''+
-            '<div id = "' + _label + '" class="' + KANBAN_CLASS + '">'+
+        var html = ''+            
                 '<h3 class="ui-widget-header">'+_label+'</h3>'+
-                '<div class="'+SPOT_CLASS+'" id="'+_label+'_spot">'+
+                '<div class="'+SPOT_CLASS+'" id="'+_label+'">'+
                     self.getPostItsHtml() +
-                '</div>'+
-            '</div>';
+                '</div>';            
         return html;
     };
     
